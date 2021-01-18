@@ -13,7 +13,8 @@ namespace CV19.ViewModels.Base
     //однако он недоступен для других программ и сборок (как в случае с модификатором public).
 
 
-    //Базовый класс модели представления
+    //Базовый класс модели представления, от которого будет наследоваться непосредственно класс модели представления
+
 
     internal abstract class ViewModel : INotifyPropertyChanged, IDisposable
     {
@@ -62,6 +63,10 @@ namespace CV19.ViewModels.Base
 
 
         //Реализуем интерфейс IDisposable
+
+
+       
+
         public void Dispose() 
         {
             Dispose(true);
@@ -72,6 +77,9 @@ namespace CV19.ViewModels.Base
 
         //Освобождение управляемых ресурсов
 
+        //Данный метод виртуальный
+        //По умолчанию он выполняется в таком виде
+        //При желании мы можем егопереопределить
        protected virtual void Dispose(bool Disposing)
         {
             //В скобках лочическая операия которая возвращает true в случае если: хотя бы одно из указанных условий верно: переменная Disposing равна true(по умолчанию все переменные типа bool 

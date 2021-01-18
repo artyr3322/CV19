@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CV19.ViewModels.Base;
 
 namespace CV19
 {
@@ -20,9 +21,13 @@ namespace CV19
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        MainViewModel MVM = new MainViewModel();
+
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }
