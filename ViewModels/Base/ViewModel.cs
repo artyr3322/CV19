@@ -15,13 +15,15 @@ namespace CV19.ViewModels.Base
 
     //Базовый класс модели представления
 
-    internal abstract class ViewModel : INotifyPropertyChanged
+    internal abstract class ViewModel : INotifyPropertyChanged, IDisposable
     {
 
 
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+    
 
 
         //За счет CallerMemberName когда в свойствах полей будем реализовывать интерфейс можно будет вызывать метод OnPropertyChanged
@@ -57,5 +59,36 @@ namespace CV19.ViewModels.Base
             return true;
 
         }
+
+
+        //Реализуем интерфейс IDisposable
+        public void Dispose() 
+        {
+            Dispose(true);
+        }
+
+        private bool _Disposed;
+
+
+        //Освобождение управляемых ресурсов
+
+       protected virtual void Dispose(bool Disposing)
+        {
+            //В скобках лочическая операия которая возвращает true в случае если: хотя бы одно из указанных условий верно: переменная Disposing равна true(по умолчанию все переменные типа bool 
+            //равны false, поэтому !Disposing это true) или переменная Disposed равна false
+            //В данном случае мы ничего не выполняем return;
+            //В противнм случае устанавливаем переменной _Disposed  значение true
+
+            if (!Disposing || _Disposed) return;
+            _Disposed = true;
+
+
+        }
+
+     
+
+
+
+
     }
 }
