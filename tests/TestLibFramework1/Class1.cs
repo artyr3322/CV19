@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Catel.MVVM;
+using CommandManager = System.Windows.Input.CommandManager;
 
 namespace TestLibFramework1
 {
