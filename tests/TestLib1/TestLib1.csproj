@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.WindowsDeskTop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+<UseWPF>true</UseWPF>
+</Project>
+
+
+<!--Если мы хотим написать БИБЛИОТЕКУ с компонентами под WPF в теге <TargetFramework> указываем  netcoreapp3.1
+далее тип проэкта ставим DeskTop: <Project Sdk="Microsoft.NET.Sdk.WindowsDeskTop">
+и потом указываем что мы используем WPF: <UseWPF>true</UseWPF>-->
