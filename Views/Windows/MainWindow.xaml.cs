@@ -22,7 +22,6 @@ namespace CV19
     public partial class MainWindow : Window
     {
 
-        MainViewModel MVM = new MainViewModel();
 
         public MainWindow()
         {

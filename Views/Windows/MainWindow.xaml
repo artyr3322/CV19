@@ -29,7 +29,7 @@
         
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem  MinWidth="150" MaxWidth="300">
-                <TextBlock Text="1234"/>
+                <TextBlock Text="{Binding Path=Status, UpdateSourceTrigger=PropertyChanged}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <ProgressBar Height="15" Width="120" Value="30"/>

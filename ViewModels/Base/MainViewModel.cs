@@ -13,7 +13,14 @@ namespace CV19.ViewModels.Base
     {
         #region Заголовок окна
 
-        private string _Title;
+        //Комментарии над свойствами пишем обязательно именно в таком виде, так как они будут отображаться у нас как подсказки в разметке
+        //(при наведении на название свойства в биндингах)
+
+        /// <summary>
+        /// заголовок окна
+        /// </summary>
+
+        private string _Title = "Статистика Covid 19";
 
         public string Title
         {
@@ -43,11 +50,16 @@ namespace CV19.ViewModels.Base
 
         #endregion
 
-        public MainViewModel()
-        {
-            string title = "Аналіз статистики CV19";
-            _Title = title;
-        }
+        /// <summary>
+        /// статус программы
+        /// </summary>
+
+        private string _Status = "Готов!";
+        public string Status
+        { get => _Status; set => Set(ref _Status, value); }
+
+
+       
 
 
 
