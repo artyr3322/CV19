@@ -10,10 +10,56 @@
     <Window.DataContext>
         <MainModel:MainViewModel/>
     </Window.DataContext>
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Вийти"/>
+            </MenuItem>
+            <MenuItem Header="Допомога">
+                <MenuItem Header="Про програму"/>
+            </MenuItem>
+        </Menu>
+
+        <!--Свойство MaxWidth определяет максимальную ширину элемента на которую он может растянутся в зависимости от его содержимого
+        изначально он просто покрывает свое содержимое, но если оно увличится(например пользователь введет много текста,
+        то в пределах этого значения элемент расширится, но не более, а если этой ширины будет недостаточно, то появится скролл, или просто он не покажет все содержимое
+        
+        MinWidth минимальное значение, если содержимое меньше, размер будет таким как задан, если содержимое больше то размер увеличится в соответствии с содержимым-->
+        
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem  MinWidth="150" MaxWidth="300">
+                <TextBlock Text="1234"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <ProgressBar Height="15" Width="120" Value="30"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <TabControl >
+            <TabItem Header="Закладка 1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="200*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0" Margin="5 7"
+                        Fill="#3a55cf" Stroke="Black" StrokeThickness="3" RadiusX="5" RadiusY="7"/>
+                    <Ellipse Grid.Column="1" Grid.Row="0" Fill="#cf3aca" Stroke="Black" StrokeThickness="3" Margin="5"/>
+                </Grid>
+                
+                
+                
+            </TabItem>
+            <TabItem Header="Закладка 2"></TabItem>
+        </TabControl>
+
+
+
+    </DockPanel>
     
-    <Grid>
-        <TextBox Text="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" Margin="20" VerticalAlignment="Top" Height="40" 
-                   HorizontalAlignment="Left"
-                   Background="#d6d6d6" TextAlignment="Center" FontSize="24" FontWeight="Bold"/>
-    </Grid>
 </Window>
