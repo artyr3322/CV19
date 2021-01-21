@@ -33,6 +33,8 @@ namespace CV19.Infrastructure.Commands.Base
         //Возвращаем либо true(дает добро на выполнение метода Execute(тоесть самой команды), 
         //либо если поле _CanExecute не равно Null возвращаем результат выполнения делегата _CanExecute
         //поле _CanExecute преедставляет из себя некое условие, которое определяет будет ли команда выполняться
+        //Наш конструктор по умолчанию(если мы на место параметра CanExecute начего не задаем устанавливает его как Null
+        //В данном случае наш метод CanExecute возвращает true
 
         public override bool CanExecute(object parameter) => _CanExecute?.Invoke(parameter) ?? true;
 

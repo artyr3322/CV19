@@ -7,14 +7,14 @@
         xmlns:MainModel="clr-namespace:CV19.ViewModels.Base"
         mc:Ignorable="d"
         Title="{Binding Path=Title}" Height="450" Width="800">
-    <Window.DataContext>
-        <MainModel:MainViewModel/>
-    </Window.DataContext>
+
+    
+    
     <DockPanel>
 
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Вийти"/>
+                <MenuItem Header="Вийти" Command="{Binding Path=ExitCommand, UpdateSourceTrigger=PropertyChanged}"/>
             </MenuItem>
             <MenuItem Header="Допомога">
                 <MenuItem Header="Про програму"/>

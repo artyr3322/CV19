@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using CV19.Infrastructure.Commands.Base;
 
 namespace CV19.ViewModels.Base
 {
@@ -58,8 +60,34 @@ namespace CV19.ViewModels.Base
         public string Status
         { get => _Status; set => Set(ref _Status, value); }
 
+        #region ExitCommand
 
-       
+        public ICommand ExitCommand { get; }
+
+        private bool CanExitCommandExecute(object obj) => true;
+
+        private void OnExitCommandExecute(object obj)
+        {
+            App.Current.Shutdown();
+        }
+
+        #endregion
+
+
+
+
+
+
+        public MainViewModel()
+        {
+
+            #region КОМАНДЫ
+
+            ExitCommand = new LambdaCommand(OnExitCommandExecute, CanExitCommandExecute);
+
+            #endregion
+        }
+
 
 
 
