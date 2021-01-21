@@ -66,15 +66,23 @@ namespace CV19.ViewModels.Base
 
         private bool CanExitCommandExecute(object obj) => true;
 
-        private void OnExitCommandExecute(object obj)
-        {
-            App.Current.Shutdown();
-        }
+        private void OnExitCommandExecute(object obj) => App.Current.Shutdown();
+    
 
         #endregion
 
-
-
+        //public ICommand _CloseAppCommand;
+       // public ICommand CloseApp
+        //{
+           // get
+           // {
+             //   if (_CloseAppCommand == null)
+              //  {
+               //     _CloseAppCommand = new CloseAppCommand();
+               // }
+               // return _CloseAppCommand;
+           // }
+       // }
 
 
 
@@ -84,6 +92,8 @@ namespace CV19.ViewModels.Base
             #region КОМАНДЫ
 
             ExitCommand = new LambdaCommand(OnExitCommandExecute, CanExitCommandExecute);
+
+           
 
             #endregion
         }

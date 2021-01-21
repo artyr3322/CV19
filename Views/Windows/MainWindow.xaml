@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CV19"
         xmlns:MainModel="clr-namespace:CV19.ViewModels.Base"
+        xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
         mc:Ignorable="d"
         Title="{Binding Path=Title}" Height="450" Width="800">
 
@@ -14,7 +15,21 @@
 
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Вийти" Command="{Binding Path=ExitCommand, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <MenuItem Header="Вийти">
+                
+                <!--Привязка команды созданной в модели-представления-->
+               <!-- <MenuItem Header="Вийти" Command="{Binding Path=EcitCommand, UpdateSourceTrigger=PropertyChanged}"/> -->
+               
+                <!--Привязка команды созданной в отдельном классе и которой нет в модели представления
+                Сначала мы установили нужное нам пространство имен в теге Window: xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
+                Далее развернули свойство элемента MenuItem Command и внесли внутрь тег с путем к классу нашей команды:  <cmd:CloseAppCommand/>-->
+                
+                <MenuItem.Command>
+                    <cmd:CloseAppCommand/>
+                </MenuItem.Command>
+
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Допомога">
                 <MenuItem Header="Про програму"/>
