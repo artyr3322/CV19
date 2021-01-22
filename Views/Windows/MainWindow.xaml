@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CV19"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:vm="clr-namespace:CV19.ViewModels.Base"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
         mc:Ignorable="d"
@@ -46,11 +47,11 @@
                
                 <!--Привязка команды созданной в отдельном классе и которой нет в модели представления
                 Сначала мы установили нужное нам пространство имен в теге Window: xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
-                Далее развернули свойство элемента MenuItem Command и внесли внутрь тег с путем к классу нашей команды:  <cmd:CloseAppCommand/>-->
+                Далее развернули свойство элемента MenuItem Command и внесли внутрь тег с путем к классу нашей команды:  <cmd:CloseAppCommand/>
                 
-               <!-- <MenuItem.Command>
+               <MenuItem.Command>
                     <cmd:CloseAppCommand/>
-                </MenuItem.Command> -->
+                </MenuItem.Command>           -->
                     
 
                 </MenuItem>
@@ -76,7 +77,32 @@
         </StatusBar>
 
         <TabControl >
-            <TabItem Header="Закладка 1">
+            <TabItem>
+                
+                <!--Свойство Header элемента TabItem может принимать не только текстовое значение, в него можно вставить дргие элементы разметки(например StackPanel)
+                Также в него можно вставить картинку дибо иконку
+                Для дополнительной настройки его необходимо развернуть
+                
+                Для организации доступа к иконкам мужно подключить пакеты
+                Заходим в раздел обозреватель решений - имя проэкта - управление пакетами  NuGet и скачиваем Font Awesome 5 
+                Также мы можем создать свои пакеты с картинками, сохранить их на сайте NuGet и потом увидеть и скачать их в пункте управление пакетами NuGet
+                
+                После скачивания пакета в разметке окна добавляем его пространство имен:  xmlns:FontAwesome="http://schemas.fontawesome.com/icons/"
+                После подключения пространства имен мы можем использовать иконки данного бесплатного пакета в нашем приложении
+                Просто указываем в отдельном теге наше пространство имен (у нас установлено fa) далее ImageAwesome, Icon для выбора картинки
+                (саму картинку можно выбрать на сайте, посмотреть ее название и потом выбрать из списка в разметке)
+                Также ей обязательно установиль высоту(она на подстраивается сама под содержимое), можно задать для нее цвет(задается как цвет шрифта ForeGround)
+                
+                -->
+                
+                
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_FolderOpen" Foreground="#3a55cf" Height="13" Margin="5"/>
+                        <TextBlock Text="Закладка 1"/>
+                       
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200*"/>
