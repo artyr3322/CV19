@@ -4,11 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CV19"
-        xmlns:MainModel="clr-namespace:CV19.ViewModels.Base"
+        xmlns:vm="clr-namespace:CV19.ViewModels.Base"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
         mc:Ignorable="d"
         Title="{Binding Path=Title}" Height="450" Width="800">
+    
+    <!--Добавим команду реагирующую на прожатие конкретных клавиш для всего окна-->
 
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{StaticResource CloseAppCommand}">
+        </KeyBinding>
+    </Window.InputBindings>
+
+    <!--Для многократного использования команды в данном окне лучше поместить ее в ресурсы для данного окна
+    задать для нее ключ-имя и не обьявлять в дальнейшем ее как отдельный тег который сильно забивает память
+    И в дальнейшем привязка такой коанды будет происходить не через Binding а через StaticResource
+    
+    //Добавление команды в ресурсы окна выглядит так:
+  
+    <Window.Resources>
+        <cmd:CloseAppCommand x:Key="CloseAppCommand"/>
+    </Window.Resources> 
+    
+    В данном случае мы можем исользовать нашу команду для всех элементов нашего окна кроме самого окна
+    Чтобы команда была доступна для испльзования для самого окна либо для других окон ее нужно поместить в ресурсы файла App.xaml-->
     
     
     <DockPanel>
@@ -16,7 +39,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
 
-                <MenuItem Header="Вийти">
+                <MenuItem Header="Вийти" Command="{StaticResource CloseAppCommand}">
                 
                 <!--Привязка команды созданной в модели-представления-->
                <!-- <MenuItem Header="Вийти" Command="{Binding Path=EcitCommand, UpdateSourceTrigger=PropertyChanged}"/> -->
@@ -25,9 +48,10 @@
                 Сначала мы установили нужное нам пространство имен в теге Window: xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
                 Далее развернули свойство элемента MenuItem Command и внесли внутрь тег с путем к классу нашей команды:  <cmd:CloseAppCommand/>-->
                 
-                <MenuItem.Command>
+               <!-- <MenuItem.Command>
                     <cmd:CloseAppCommand/>
-                </MenuItem.Command>
+                </MenuItem.Command> -->
+                    
 
                 </MenuItem>
             </MenuItem>
@@ -64,7 +88,24 @@
                     </Grid.RowDefinitions>
                     <Rectangle Grid.Column="0" Grid.Row="0" Margin="5 7"
                         Fill="#3a55cf" Stroke="Black" StrokeThickness="3" RadiusX="5" RadiusY="7"/>
-                    <Ellipse Grid.Column="1" Grid.Row="0" Fill="#cf3aca" Stroke="Black" StrokeThickness="3" Margin="5"/>
+                    
+                    <!--У эллипса как и у некоторых других элементов XAML нет свойства комманды(Command)
+                    Поэтому для них привязка существующей команды выгляди по-другому
+                    Обращаемся к свойству InputBindings(в развернутом виде), где можно указать реакцию обьекта на нажатие клавиш и кнопок мышки
+                    Нужно указать на какую клавишу и какое действие сработает команда
+                    Далее обращаемся к свойству MouseBinding и ему задаем команду(у него есть свойство Command)
+                    С помощью биндинга задаем нашу команду, и делее идет свойство которое реагирует на нажатие клавиш
+                    например: MouseAction="LeftDoubleClick" реагирует на двойное прожатие ЛКМ на наш эллипс
+                    -->
+
+                    <Ellipse Grid.Column="1" Grid.Row="0" Fill="#cf3aca" Stroke="Black" StrokeThickness="3" Margin="5">
+                        <Ellipse.InputBindings>
+                            <MouseBinding  MouseAction="LeftDoubleClick" Command="{StaticResource CloseAppCommand}">
+                           
+                            </MouseBinding>
+
+                        </Ellipse.InputBindings>
+                    </Ellipse>
                 </Grid>
                 
                 

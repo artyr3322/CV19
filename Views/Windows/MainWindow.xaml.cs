@@ -27,7 +27,7 @@ namespace CV19
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = MVM;
+           // DataContext = MVM;
             
         }
     }
