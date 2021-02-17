@@ -7,9 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV19", "CV19.csproj", "{48C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F19DA459-AA5E-44B1-9569-DAB41BC0CE30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV19Console", "..\CV19Console\CV19Console.csproj", "{B72F5382-FA80-47AF-9B24-543BF7402582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CV19Console", "..\CV19Console\CV19Console.csproj", "{B72F5382-FA80-47AF-9B24-543BF7402582}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV19experiment", "..\CV19experiment\CV19experiment.csproj", "{EE08426C-9493-4992-B29C-58DC639DDFF1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Получение данных HttpClient", "..\Получение данных HttpClient\Получение данных HttpClient.csproj", "{94807F60-1F73-4C0D-AE02-296FC2763ED4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Получение данных HttpClient Синхронный вариант", "..\Получение данных HttpClient Синхронный вариант\Получение данных HttpClient Синхронный вариант.csproj", "{C106DBD7-D61C-4BEA-BB07-96A01F73AD7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,14 @@ Global
 		{EE08426C-9493-4992-B29C-58DC639DDFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE08426C-9493-4992-B29C-58DC639DDFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE08426C-9493-4992-B29C-58DC639DDFF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94807F60-1F73-4C0D-AE02-296FC2763ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94807F60-1F73-4C0D-AE02-296FC2763ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94807F60-1F73-4C0D-AE02-296FC2763ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94807F60-1F73-4C0D-AE02-296FC2763ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C106DBD7-D61C-4BEA-BB07-96A01F73AD7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C106DBD7-D61C-4BEA-BB07-96A01F73AD7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C106DBD7-D61C-4BEA-BB07-96A01F73AD7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C106DBD7-D61C-4BEA-BB07-96A01F73AD7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +48,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B72F5382-FA80-47AF-9B24-543BF7402582} = {F19DA459-AA5E-44B1-9569-DAB41BC0CE30}
 		{EE08426C-9493-4992-B29C-58DC639DDFF1} = {F19DA459-AA5E-44B1-9569-DAB41BC0CE30}
+		{94807F60-1F73-4C0D-AE02-296FC2763ED4} = {F19DA459-AA5E-44B1-9569-DAB41BC0CE30}
+		{C106DBD7-D61C-4BEA-BB07-96A01F73AD7C} = {F19DA459-AA5E-44B1-9569-DAB41BC0CE30}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AC011A4A-55D7-46E1-898B-24A69CF209BD}
