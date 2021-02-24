@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands.Base;
+using CV19.Models;
 
 namespace CV19.ViewModels.Base
 {
@@ -13,6 +14,25 @@ namespace CV19.ViewModels.Base
 
     internal class MainViewModel : ViewModel
     {
+
+
+        //Также в нашем приложении нам понадобиться строить графики, для этого рнам нужно добавить пакет OxyPlot.WPF
+        //Так как мы используем концепцию MVVM все графики у нас просто рисуются в виде разметкеиXAML
+
+        //Нам нужно свойство которое возвращает перечисление точек данных которые нам нужны чтобы построить графики
+        //Далее выбираем тип перечисления которое нам необходимо для дальнейшей работы:
+        // - Если нам не нужно будет в дальнейшем добавлять и удалять обьекты перечисления(точки) 
+        //то выбитаем тип IEnumerable<T>
+        // - Если нам нужна изменяемая коллекция используем ObservableCollection<T>
+
+        /// <summary>
+        /// Тесторый набор данных для визуализации графиков
+        /// </summary>
+
+        private IEnumerable<DataPoint> _TestDataPoints;
+
+        public IEnumerable<DataPoint> TestDataPoints { get => _TestDataPoints; set => Set(ref _TestDataPoints, value); }
+
         #region Заголовок окна
 
         //Комментарии над свойствами пишем обязательно именно в таком виде, так как они будут отображаться у нас как подсказки в разметке
@@ -93,7 +113,34 @@ namespace CV19.ViewModels.Base
 
             ExitCommand = new LambdaCommand(OnExitCommandExecute, CanExitCommandExecute);
 
-           
+
+
+            #endregion
+
+            #region ГРАФИК
+
+            List<DataPoint> data_points = new List<DataPoint>((int)(360/0.1));
+
+            //Для построения графика используем математические операции
+            //Все математические операции представлены статическим классом Math
+            //
+            //Чтобы понять что такоет синус и косинус угла нужно представить его в виде треугольника
+            //Синус угла - соотношение катета(который находится напротив самого угла, в противоположном конце треугольника)
+            //к гипотенузе
+            //Косинус - это соотношение катета который лежит возле самого угла к гипотенузе
+            //
+            //Math.PI - число ПИ, оно равно 3.1415926535897931
+
+            for (var x = 0d; x <= 360; x += 0.1)
+            {
+                const double to_rad = Math.PI / 180;
+                double y = Math.Sin(x * to_rad);
+
+                data_points.Add(new DataPoint { XValue = x, YValue = y });
+            }
+
+            TestDataPoints = data_points;
+
 
             #endregion
         }
