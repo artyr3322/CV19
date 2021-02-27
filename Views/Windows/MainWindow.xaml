@@ -7,6 +7,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:vm="clr-namespace:CV19.ViewModels.Base"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="{Binding Path=Title}" Height="450" Width="800">
     
@@ -76,11 +77,20 @@
             </StatusBarItem>
         </StatusBar>
 
-        <TabControl >
-            <TabItem>
+        <!--Для создания нескольких вкладок в одном окне
+        Создаем список вкладок TabControl и вкладки в нем TabItem
+        Так как TabControl это список то у него есть те же свойства что и у ListView, 
+        каждая вкладка как и элемент списка имеет свой индекс и к ней можно обратиться по этому индексу
+        например мы можем ввести индекс активной вкладки из модели представления
+        К TabControl есть свойство SelectedIndex
+        -->
+        
+        
+        <TabControl SelectedIndex="">
+        
                 
                 <!--Свойство Header элемента TabItem может принимать не только текстовое значение, в него можно вставить дргие элементы разметки(например StackPanel)
-                Также в него можно вставить картинку дибо иконку
+                Также в него можно вставить картинку либо иконку
                 Для дополнительной настройки его необходимо развернуть
                 
                 Для организации доступа к иконкам мужно подключить пакеты
@@ -91,11 +101,14 @@
                 После подключения пространства имен мы можем использовать иконки данного бесплатного пакета в нашем приложении
                 Просто указываем в отдельном теге наше пространство имен (у нас установлено fa) далее ImageAwesome, Icon для выбора картинки
                 (саму картинку можно выбрать на сайте, посмотреть ее название и потом выбрать из списка в разметке)
-                Также ей обязательно установиль высоту(она на подстраивается сама под содержимое), можно задать для нее цвет(задается как цвет шрифта ForeGround)
-                
+                Также ей обязательно установиль высоту(она на подстраивается сама под содержимое), можно задать для нее цвет(задается как цвет шрифта ForeGround)               
                 -->
-                
-                
+
+            <!--С помощью свойства Visibility="Collapsed" мы можем отключить показ вкладки либо другого элемента
+            если это нам нужно-->
+
+
+                <TabItem Visibility="Collapsed">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Solid_FolderOpen" Foreground="#3a55cf" Height="13" Margin="5"/>
@@ -103,7 +116,12 @@
                        
                     </StackPanel>
                 </TabItem.Header>
-                <Grid>
+           
+
+
+        
+
+        <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200*"/>
                         <ColumnDefinition Width="200*"/>
@@ -133,13 +151,52 @@
                         </Ellipse.InputBindings>
                     </Ellipse>
                 </Grid>
-                
-                
-                
             </TabItem>
-            <TabItem Header="Закладка 2"></TabItem>
-        </TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_ChartLine" Foreground="#3a55cf" Height="13" Margin="5"/>
+                        <TextBlock Text="Графіки"></TextBlock>
+                        
 
+                    </StackPanel>
+                      
+                </TabItem.Header>
+
+                <!--Создаем график с помощью OxyPlot
+                        Подключаем пространство имен для библиотеки OxyPlot: xmlns:oxy="http://oxyplot.org/wpf"
+                        Открываем тег <oxy:Plot>
+                        С помощью свойства Axes добавляем оси для нашего графика
+                        Далее указываем положение осей слева <oxy:LinearAxis Position="Left"/> и внизу <oxy:LinearAxis Position="Bottom"/>
+                 
+                -->
+
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Left"/>
+                        <oxy:LinearAxis Position="Bottom"/>
+                    </oxy:Plot.Axes>
+
+
+                    <!-- Далее открываем тег LineSeries и добавляем саму линию графика
+                    И с помощью его свойства ItemSource указываем источник данных где ей брать
+                    координаты по которым она будет проходить
+                    В качестве источника данных может выступать любая коллекция/массив 
+                    реализующая интерфейс IEnumerable, мы подключим наш список TestDataPoints 
+                    И также нам надо обьяснить программе что является координатами X и Y 
+                    с помощью свойств DataFieldX и DataFieldY, присвоим ему значения полей обьектов нашего перечисления
+                    Так как у нас в перечислении все обьекты класса Point у них есть 2 поля соответствующих координатам по оси X и Y
+                    -->
+                    
+                    
+                    <oxy:LineSeries Color="Red" ItemsSource="{Binding TestDataPoints}" 
+                                    DataFieldX="XValue" DataFieldY="YValue"/>
+
+                </oxy:Plot>
+
+            </TabItem>
+
+        </TabControl>
 
 
     </DockPanel>
