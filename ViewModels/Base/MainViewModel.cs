@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands.Base;
 using CV19.Models;
@@ -15,8 +17,15 @@ namespace CV19.ViewModels.Base
     internal class MainViewModel : ViewModel
     {
 
+        /// <summary>
+        /// номер выбранной вкладки, привязываем его к свойству элемента TabControl SelectedIndex
+        /// </summary>
 
-        //Также в нашем приложении нам понадобиться строить графики, для этого рнам нужно добавить пакет OxyPlot.WPF
+        private int _SelectedPageIndex;
+        public int SelectedPageIndex { get => _SelectedPageIndex; set => Set(ref _SelectedPageIndex, value);  }
+
+
+        //Также в нашем приложении нам понадобиться строить графики, для этого нам нужно добавить пакет OxyPlot.WPF
         //Так как мы используем концепцию MVVM все графики у нас просто рисуются в виде разметкеиXAML
 
         //Нам нужно свойство которое возвращает перечисление точек данных которые нам нужны чтобы построить графики
@@ -87,23 +96,24 @@ namespace CV19.ViewModels.Base
         private bool CanExitCommandExecute(object obj) => true;
 
         private void OnExitCommandExecute(object obj) => App.Current.Shutdown();
-    
 
         #endregion
 
-        //public ICommand _CloseAppCommand;
-       // public ICommand CloseApp
-        //{
-           // get
-           // {
-             //   if (_CloseAppCommand == null)
-              //  {
-               //     _CloseAppCommand = new CloseAppCommand();
-               // }
-               // return _CloseAppCommand;
-           // }
-       // }
+        #region ChangeTabIndexCommand
 
+        public ICommand ChangeTabIndexCommand { get; }
+
+        private bool CanChangeTabIndexCommandExecute(object obj) => _SelectedPageIndex >= 0;
+
+        private void OnChangeTabIndexCommandExecute(object obj)
+        {
+            if (obj is null) return;
+            SelectedPageIndex += Convert.ToInt32(obj);
+        }
+
+
+
+        #endregion
 
 
         public MainViewModel()
@@ -112,8 +122,7 @@ namespace CV19.ViewModels.Base
             #region КОМАНДЫ
 
             ExitCommand = new LambdaCommand(OnExitCommandExecute, CanExitCommandExecute);
-
-
+            ChangeTabIndexCommand = new LambdaCommand(OnChangeTabIndexCommandExecute, CanChangeTabIndexCommandExecute);
 
             #endregion
 

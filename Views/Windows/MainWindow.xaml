@@ -56,10 +56,25 @@
                     
 
                 </MenuItem>
+                
             </MenuItem>
             <MenuItem Header="Допомога">
                 <MenuItem Header="Про програму"/>
             </MenuItem>
+
+            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1">
+                <MenuItem.Header>
+                    <fa:ImageAwesome Height="15" Icon="Regular_ArrowAltCircleLeft" />
+                </MenuItem.Header>
+            </MenuItem>
+
+            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1">
+                <MenuItem.Header>
+                    <fa:ImageAwesome Height="15" Icon="Regular_ArrowAltCircleRight" />
+                </MenuItem.Header>
+            </MenuItem>
+
+            
         </Menu>
 
         <!--Свойство MaxWidth определяет максимальную ширину элемента на которую он может растянутся в зависимости от его содержимого
@@ -75,6 +90,9 @@
             <StatusBarItem>
                 <ProgressBar Height="15" Width="120" Value="30"/>
             </StatusBarItem>
+
+            <StatusBarItem Content="{Binding SelectedPageIndex}"/>
+
         </StatusBar>
 
         <!--Для создания нескольких вкладок в одном окне
@@ -86,7 +104,7 @@
         -->
         
         
-        <TabControl SelectedIndex="">
+        <TabControl  SelectedIndex="{Binding SelectedPageIndex}" >
         
                 
                 <!--Свойство Header элемента TabItem может принимать не только текстовое значение, в него можно вставить дргие элементы разметки(например StackPanel)
@@ -108,7 +126,7 @@
             если это нам нужно-->
 
 
-                <TabItem Visibility="Collapsed">
+                <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Solid_FolderOpen" Foreground="#3a55cf" Height="13" Margin="5"/>
@@ -196,6 +214,9 @@
 
             </TabItem>
 
+            <TabItem Header="Закдадка 3"></TabItem>
+            <TabItem Header="Закдадка 4"></TabItem>
+            <TabItem Header="Закдадка 5"></TabItem>
         </TabControl>
 
 

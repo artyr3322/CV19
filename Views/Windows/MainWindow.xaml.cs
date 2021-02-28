@@ -28,7 +28,7 @@ namespace CV19
         {
             InitializeComponent();
            // DataContext = MVM;
-            
+           
         }
     }
 }
