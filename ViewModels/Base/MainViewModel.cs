@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CV19.Infrastructure.Commands.Base;
 using CV19.Models;
@@ -15,8 +16,17 @@ namespace CV19.ViewModels.Base
     internal class MainViewModel : ViewModel
     {
 
+        /// <summary>
+        /// номер выбранной вкладки, привязываем его к свойству элемента TabControl SelectedIndex
+        /// </summary>
 
-        //Также в нашем приложении нам понадобиться строить графики, для этого рнам нужно добавить пакет OxyPlot.WPF
+        private int _SelectedPageIndex;
+        public int SelectedPageIndex { get => _SelectedPageIndex; set => Set(ref _SelectedPageIndex, value);  }
+
+        private TabControl _Tabs;
+        public TabControl Tabs { get => _Tabs; set => Set(ref _Tabs, value); }
+
+        //Также в нашем приложении нам понадобиться строить графики, для этого нам нужно добавить пакет OxyPlot.WPF
         //Так как мы используем концепцию MVVM все графики у нас просто рисуются в виде разметкеиXAML
 
         //Нам нужно свойство которое возвращает перечисление точек данных которые нам нужны чтобы построить графики
@@ -87,22 +97,58 @@ namespace CV19.ViewModels.Base
         private bool CanExitCommandExecute(object obj) => true;
 
         private void OnExitCommandExecute(object obj) => App.Current.Shutdown();
-    
+
+        #endregion
+
+        #region PreviousTabCommand
+
+        public ICommand PreviousTabCommand { get; }
+
+        private bool CanPreviousTabCommandExecute(object obj)
+        {
+            if (SelectedPageIndex > 0)
+                return true;
+
+            else return false;
+        }
+
+        private void OnPreviousTabCommandExecute(object obj)
+        {
+           SelectedPageIndex = SelectedPageIndex - 1;
+        }
+
+        #endregion
+
+
+        #region NextTabCommand
+
+        public ICommand NextTabCommand { get; }
+
+        private bool CanNextTabCommandExecute(object obj)
+        {
+            
+
+            if (SelectedPageIndex < )
+                return true;
+
+            else return false;
+        }
+
 
         #endregion
 
         //public ICommand _CloseAppCommand;
-       // public ICommand CloseApp
+        // public ICommand CloseApp
         //{
-           // get
-           // {
-             //   if (_CloseAppCommand == null)
-              //  {
-               //     _CloseAppCommand = new CloseAppCommand();
-               // }
-               // return _CloseAppCommand;
-           // }
-       // }
+        // get
+        // {
+        //   if (_CloseAppCommand == null)
+        //  {
+        //     _CloseAppCommand = new CloseAppCommand();
+        // }
+        // return _CloseAppCommand;
+        // }
+        // }
 
 
 
@@ -112,7 +158,7 @@ namespace CV19.ViewModels.Base
             #region КОМАНДЫ
 
             ExitCommand = new LambdaCommand(OnExitCommandExecute, CanExitCommandExecute);
-
+            PreviousTabCommand = new LambdaCommand(OnPreviousTabCommandExecute, CanPreviousTabCommandExecute);
 
 
             #endregion
