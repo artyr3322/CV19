@@ -1,0 +1,225 @@
+﻿<Window x:Class="CV19.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CV19"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:vm="clr-namespace:CV19.ViewModels.Base"
+        xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="{Binding Path=Title}" Height="450" Width="800">
+    
+    <!--Добавим команду реагирующую на прожатие конкретных клавиш для всего окна-->
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{StaticResource CloseAppCommand}">
+        </KeyBinding>
+    </Window.InputBindings>
+
+    <!--Для многократного использования команды в данном окне лучше поместить ее в ресурсы для данного окна
+    задать для нее ключ-имя и не обьявлять в дальнейшем ее как отдельный тег который сильно забивает память
+    И в дальнейшем привязка такой коанды будет происходить не через Binding а через StaticResource
+    
+    //Добавление команды в ресурсы окна выглядит так:
+  
+    <Window.Resources>
+        <cmd:CloseAppCommand x:Key="CloseAppCommand"/>
+    </Window.Resources> 
+    
+    В данном случае мы можем исользовать нашу команду для всех элементов нашего окна кроме самого окна
+    Чтобы команда была доступна для испльзования для самого окна либо для других окон ее нужно поместить в ресурсы файла App.xaml-->
+    
+    
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+
+                <MenuItem Header="Вийти" Command="{StaticResource CloseAppCommand}">
+                
+                <!--Привязка команды созданной в модели-представления-->
+               <!-- <MenuItem Header="Вийти" Command="{Binding Path=EcitCommand, UpdateSourceTrigger=PropertyChanged}"/> -->
+               
+                <!--Привязка команды созданной в отдельном классе и которой нет в модели представления
+                Сначала мы установили нужное нам пространство имен в теге Window: xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
+                Далее развернули свойство элемента MenuItem Command и внесли внутрь тег с путем к классу нашей команды:  <cmd:CloseAppCommand/>
+                
+               <MenuItem.Command>
+                    <cmd:CloseAppCommand/>
+                </MenuItem.Command>           -->
+                    
+
+                </MenuItem>
+                
+            </MenuItem>
+            <MenuItem Header="Допомога">
+                <MenuItem Header="Про програму"/>
+            </MenuItem>
+
+            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="-1">
+                <MenuItem.Header>
+                    <fa:ImageAwesome Height="15" Icon="Regular_ArrowAltCircleLeft" />
+                </MenuItem.Header>
+            </MenuItem>
+
+            <MenuItem Command="{Binding ChangeTabIndexCommand}" CommandParameter="+1">
+                <MenuItem.Header>
+                    <fa:ImageAwesome Height="15" Icon="Regular_ArrowAltCircleRight" />
+                </MenuItem.Header>
+            </MenuItem>
+
+            
+        </Menu>
+
+        <!--Свойство MaxWidth определяет максимальную ширину элемента на которую он может растянутся в зависимости от его содержимого
+        изначально он просто покрывает свое содержимое, но если оно увличится(например пользователь введет много текста,
+        то в пределах этого значения элемент расширится, но не более, а если этой ширины будет недостаточно, то появится скролл, или просто он не покажет все содержимое
+        
+        MinWidth минимальное значение, если содержимое меньше, размер будет таким как задан, если содержимое больше то размер увеличится в соответствии с содержимым-->
+        
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem  MinWidth="150" MaxWidth="300">
+                <TextBlock Text="{Binding Path=Status, UpdateSourceTrigger=PropertyChanged}"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <ProgressBar Height="15" Width="120" Value="30"/>
+            </StatusBarItem>
+
+            <StatusBarItem Content="{Binding SelectedPageIndex}"/>
+
+        </StatusBar>
+
+        <!--Для создания нескольких вкладок в одном окне
+        Создаем список вкладок TabControl и вкладки в нем TabItem
+        Так как TabControl это список то у него есть те же свойства что и у ListView, 
+        каждая вкладка как и элемент списка имеет свой индекс и к ней можно обратиться по этому индексу
+        например мы можем ввести индекс активной вкладки из модели представления
+        К TabControl есть свойство SelectedIndex
+        -->
+        
+        
+        <TabControl  SelectedIndex="{Binding SelectedPageIndex}" >
+        
+                
+                <!--Свойство Header элемента TabItem может принимать не только текстовое значение, в него можно вставить дргие элементы разметки(например StackPanel)
+                Также в него можно вставить картинку либо иконку
+                Для дополнительной настройки его необходимо развернуть
+                
+                Для организации доступа к иконкам мужно подключить пакеты
+                Заходим в раздел обозреватель решений - имя проэкта - управление пакетами  NuGet и скачиваем Font Awesome 5 
+                Также мы можем создать свои пакеты с картинками, сохранить их на сайте NuGet и потом увидеть и скачать их в пункте управление пакетами NuGet
+                
+                После скачивания пакета в разметке окна добавляем его пространство имен:  xmlns:FontAwesome="http://schemas.fontawesome.com/icons/"
+                После подключения пространства имен мы можем использовать иконки данного бесплатного пакета в нашем приложении
+                Просто указываем в отдельном теге наше пространство имен (у нас установлено fa) далее ImageAwesome, Icon для выбора картинки
+                (саму картинку можно выбрать на сайте, посмотреть ее название и потом выбрать из списка в разметке)
+                Также ей обязательно установиль высоту(она на подстраивается сама под содержимое), можно задать для нее цвет(задается как цвет шрифта ForeGround)               
+                -->
+
+            <!--С помощью свойства Visibility="Collapsed" мы можем отключить показ вкладки либо другого элемента
+            если это нам нужно-->
+
+
+                <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_FolderOpen" Foreground="#3a55cf" Height="13" Margin="5"/>
+                        <TextBlock Text="Закладка 1"/>
+                       
+                    </StackPanel>
+                </TabItem.Header>
+           
+
+
+        
+
+        <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="200*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Column="0" Grid.Row="0" Margin="5 7"
+                        Fill="#3a55cf" Stroke="Black" StrokeThickness="3" RadiusX="5" RadiusY="7"/>
+                    
+                    <!--У эллипса как и у некоторых других элементов XAML нет свойства комманды(Command)
+                    Поэтому для них привязка существующей команды выгляди по-другому
+                    Обращаемся к свойству InputBindings(в развернутом виде), где можно указать реакцию обьекта на нажатие клавиш и кнопок мышки
+                    Нужно указать на какую клавишу и какое действие сработает команда
+                    Далее обращаемся к свойству MouseBinding и ему задаем команду(у него есть свойство Command)
+                    С помощью биндинга задаем нашу команду, и делее идет свойство которое реагирует на нажатие клавиш
+                    например: MouseAction="LeftDoubleClick" реагирует на двойное прожатие ЛКМ на наш эллипс
+                    -->
+
+                    <Ellipse Grid.Column="1" Grid.Row="0" Fill="#cf3aca" Stroke="Black" StrokeThickness="3" Margin="5">
+                        <Ellipse.InputBindings>
+                            <MouseBinding  MouseAction="LeftDoubleClick" Command="{StaticResource CloseAppCommand}">
+                           
+                            </MouseBinding>
+
+                        </Ellipse.InputBindings>
+                    </Ellipse>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:ImageAwesome Icon="Solid_ChartLine" Foreground="#3a55cf" Height="13" Margin="5"/>
+                        <TextBlock Text="Графіки"></TextBlock>
+                        
+
+                    </StackPanel>
+                      
+                </TabItem.Header>
+
+                <!--Создаем график с помощью OxyPlot
+                        Подключаем пространство имен для библиотеки OxyPlot: xmlns:oxy="http://oxyplot.org/wpf"
+                        Открываем тег <oxy:Plot>
+                        С помощью свойства Axes добавляем оси для нашего графика
+                        Далее указываем положение осей слева <oxy:LinearAxis Position="Left"/> и внизу <oxy:LinearAxis Position="Bottom"/>
+                 
+                -->
+
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Left"/>
+                        <oxy:LinearAxis Position="Bottom"/>
+                    </oxy:Plot.Axes>
+
+
+                    <!-- Далее открываем тег LineSeries и добавляем саму линию графика
+                    И с помощью его свойства ItemSource указываем источник данных где ей брать
+                    координаты по которым она будет проходить
+                    В качестве источника данных может выступать любая коллекция/массив 
+                    реализующая интерфейс IEnumerable, мы подключим наш список TestDataPoints 
+                    И также нам надо обьяснить программе что является координатами X и Y 
+                    с помощью свойств DataFieldX и DataFieldY, присвоим ему значения полей обьектов нашего перечисления
+                    Так как у нас в перечислении все обьекты класса Point у них есть 2 поля соответствующих координатам по оси X и Y
+                    -->
+                    
+                    
+                    <oxy:LineSeries Color="Red" ItemsSource="{Binding TestDataPoints}" 
+                                    DataFieldX="XValue" DataFieldY="YValue"/>
+
+                </oxy:Plot>
+
+            </TabItem>
+
+            <TabItem Header="Закдадка 3"></TabItem>
+            <TabItem Header="Закдадка 4"></TabItem>
+            <TabItem Header="Закдадка 5"></TabItem>
+        </TabControl>
+
+
+    </DockPanel>
+    
+</Window>
